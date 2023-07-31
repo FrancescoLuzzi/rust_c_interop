@@ -1,0 +1,28 @@
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[package]
+name = "rust_c_interop"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.70.0"
+
+[lib]
+name = "mssql_wisperer"
+crate-type = ["cdylib","staticlib"]
+
+[profile.release]
+opt-level = "z"     # Optimize for size.
+lto = true          # Enable Link Time Optimization
+panic = "abort"     # Abort on panic
+strip = false       # Automatically strip symbols from the binary.
+
+[build-dependencies]
+cbindgen = "0.24"
+
+[dependencies]
+tokio = {version = "1.28.0", features = ["full"] }
+tokio-util = "0.7.8"
+once_cell = "1"
+
+[dependencies.tiberius]
+version = "0.12"
+features = ["native-tls", "sql-browser-tokio"]
